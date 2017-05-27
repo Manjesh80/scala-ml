@@ -1,9 +1,11 @@
 package com.manjesh.sparkml.maths
 
+import breeze.linalg
 import org.scalatest._
 import com.manjesh.sparkml.maths._
 import breeze.linalg.{normalize, _}
 import breeze.stats.mean
+import org.apache.spark.ml.linalg.Matrices
 
 
 /**
@@ -112,5 +114,51 @@ class MathsDemoTests extends FlatSpec with Matchers {
     assert(1 === 1)
 
   }
+
+  "Matrix opertions" should "work fine" in {
+
+    val dm = DenseMatrix((1, 1), (2, 2))
+
+    println(dm)
+    println("dm.rows :" + dm.rows + " dm.cols : " + dm.cols)
+
+    val dmx = dm(::, 0)
+    println(dmx)
+
+    println(dm.t)
+    assert(1 === 1)
+
+  }
+
+  "Compressed Sparse Column (CSC) Matrix " should "work fine " in {
+
+    val cscBuilder = new linalg.CSCMatrix.Builder[Double](rows = 10, cols = 10)
+    cscBuilder.add(3, 4, 10)
+    val cscMatrix = cscBuilder.result()
+    println(cscMatrix)
+
+    assert(1 === 1)
+
+  }
+
+  "Matrix in Spark " should "work fine" in {
+    import org.apache.spark.ml.linalg.{Matrix => SMatrix}
+
+    val dMatrix: SMatrix = Matrices.dense(2, 2, Array(1.0, 2.0, 3.0,
+      4.0))
+    println("dMatrix: n" + dMatrix)
+
+    val sMatrixOne: SMatrix = Matrices.sparse(3, 2, Array(0, 1, 3),
+      Array(0, 2, 1), Array(5, 6, 7))
+    println("sMatrixOne: n" + sMatrixOne)
+
+    val sMatrixTwo: SMatrix = Matrices.sparse(3, 2, Array(0, 1, 3),
+      Array(0, 1, 2), Array(5, 6, 7))
+    println("sMatrixTwo: n" + sMatrixTwo)
+
+    assert(1 === 1)
+
+  }
+
 
 }

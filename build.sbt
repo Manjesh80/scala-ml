@@ -9,9 +9,9 @@ val sparkVersion = "2.0.0"
 
 
 libraryDependencies ++= Seq(
-  "org.scalanlp" %% "breeze" % "0.12",
-  "org.scalanlp" %% "breeze-natives" % "0.12",
-  "org.scalanlp" %% "breeze-viz" % "0.12",
+  /*"org.scalanlp" %% "breeze" % "0.13",
+  "org.scalanlp" %% "breeze-natives" % "0.13",
+  "org.scalanlp" %% "breeze-viz" % "0.13",*/
 
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-mllib" % sparkVersion,
