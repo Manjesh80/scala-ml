@@ -52,4 +52,12 @@ class MathsDemo {
     spkVector
   }
 
+  def vectorAddition = {
+    val a = DenseVector(0.5, 0.5, 0.5)
+    val b = DenseVector(0.5, 0.5, 0.5)
+
+    a dot b
+
+  }
+
 }

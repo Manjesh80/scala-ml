@@ -57,4 +57,11 @@ class MathsDemoTests extends FlatSpec with Matchers {
 
   }
 
+  "Vector addition " should "add properly" in {
+    val k = new MathsDemo()
+    println("Create sparse vector and add ==> " + k.vectorAddition)
+    assert(k.vectorAddition.toString === "0.75")
+
+  }
+
 }
