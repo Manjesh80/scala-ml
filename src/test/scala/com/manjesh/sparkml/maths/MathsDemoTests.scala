@@ -2,6 +2,8 @@ package com.manjesh.sparkml.maths
 
 import org.scalatest._
 import com.manjesh.sparkml.maths._
+import breeze.linalg.{normalize, _}
+import breeze.stats.mean
 
 
 /**
@@ -61,6 +63,53 @@ class MathsDemoTests extends FlatSpec with Matchers {
     val k = new MathsDemo()
     println("Create sparse vector and add ==> " + k.vectorAddition)
     assert(k.vectorAddition.toString === "0.75")
+
+  }
+
+  "Mean of a vector " should "work properly" in {
+    val meanValue = breeze.stats.mean(DenseVector(0.0, 1.5, 2.0))
+    println(meanValue)
+    assert(meanValue.toString === "1.1666666666666667")
+
+  }
+
+
+  /**
+    *
+    * Normalized vector: Every vector has a magnitude, which is calculated using the Pythagoras
+    * theorem as |v| = sqrt(x^2 + y^2 + z^2); this magnitude is a length of a line from the origin
+    * point (0,0,0) to the point indicated by the vector. A vector is normal if its magnitude is 1.
+    * Normalizing a vector means changing it so that it points in the same direction (beginning
+    * from the origin), but its magnitude is one. Hence, a normalized vector is a vector in the
+    * same direction, but with norm (length) 1. It is denoted by ^X and is given by the following
+    * formula:
+    *
+    *
+    */
+  "Normalized vector " should "work properly" in {
+
+    val vector = DenseVector(3.0, 4.0)
+    println("Normiazlized vector " + normalize(vector))
+    println("Norm vector " + norm(vector))
+    assert(1 === 1)
+
+    val v = DenseVector(-0.4326, -1.6656, 0.1253, 0.2877, -1.1465)
+    val nm = norm(v, 1)
+    println(nm)
+    val nmlize = normalize(v)
+    println(norm(nmlize))
+  }
+
+  "Compare operations" should "work fine" in {
+
+    val a1 = DenseVector(1.0, 2.0, 3.0)
+    val b1 = DenseVector(1.0, 4.0, 9.0)
+    println(a1 :== b1)
+    println((a1 :<= b1))
+    println((a1 :>= b1))
+    println((a1 :< b1))
+    println((a1 :> b1))
+    assert(1 === 1)
 
   }
 
