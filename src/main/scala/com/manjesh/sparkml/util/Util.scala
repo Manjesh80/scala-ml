@@ -32,10 +32,11 @@ object Util {
 
     return StructType(
       Array(
-        StructField("id", StringType, true),
-        StructField("name", StringType, true),
-        StructField("date", StringType, true),
-        StructField("url", StringType, true)
+        StructField("no", IntegerType, true),
+        StructField("age", StringType, true),
+        StructField("gender", StringType, true),
+        StructField("occupation", StringType, true),
+        StructField("zipCode", StringType, true)
       )
     )
   }
