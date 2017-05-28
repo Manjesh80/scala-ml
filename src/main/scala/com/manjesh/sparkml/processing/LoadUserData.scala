@@ -1,6 +1,6 @@
 package com.manjesh.sparkml.processing
 
-import com.manjesh.sparkml.util.ProcessingUtils
+import com.manjesh.sparkml.util.Util
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.log4j.{Level, Logger}
@@ -19,13 +19,13 @@ object LoadUserData {
     Logger.getLogger("org").setLevel(Level.WARN)
 
     val spConfig = (new SparkConf).setMaster("local").setAppName("SparkApp")
-    val sparkSession = SparkSession
+    val sparkSession: SparkSession = SparkSession
       .builder()
       .appName("SparkUserData").config(spConfig)
       .getOrCreate()
 
     val user_df = sparkSession.read.format("com.databricks.spark.csv")
-      .option("delimiter", "|").schema(ProcessingUtils.getUserSchema)
+      .option("delimiter", "|").schema(Util.getUserSchema)
       .load("/home/cloudera/workspace/scala-ml/data/u.user")
 
     val first = user_df.first()
