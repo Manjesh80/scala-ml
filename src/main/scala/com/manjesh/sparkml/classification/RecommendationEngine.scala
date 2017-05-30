@@ -17,12 +17,15 @@ object RecommendationEngine {
   def main(args: Array[String]): Unit = {
 
     //val model = args(0)
-    val model = "NB"
+    val model = "LR"
 
     Logger.getLogger("org").setLevel(Level.WARN)
+    Logger.getLogger("akka").setLevel(Level.OFF)
+
     val sparkConf = ClassificationUtils.createSparkConf("ML-CLASSIFICATION-RECOMMENDATION-ENGINE")
     val sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
     val sparkContext = sparkSession.sparkContext;
+    sparkContext.setLogLevel("WARN")
     val sqlContext = sparkSession.sqlContext;
 
     println(" ************* " + Calendar.getInstance().getTime().toString + " ************* ")
@@ -111,6 +114,7 @@ object RecommendationEngine {
 
     if (model != "NB") {
       val features = getFeatures;
+      runPipeline(model, features, allGoodCleanedFeatures, sparkContext)
     }
     else {
       val features = getFeatures;
@@ -124,9 +128,17 @@ object RecommendationEngine {
   def runPipeline(model: String, features: VectorAssembler,
                   dataFrame: DataFrame, sparkContext: SparkContext) = model match {
 
-    case "NB" => {
-      NaivesBayesPipeline.naiveBayesPipeline(features, dataFrame)
-    }
+    case "NB" => NaivesBayesPipeline.naiveBayesPipeline(features, dataFrame)
+
+    case "LR" => LogisticRegressionPipeline.logisticRegressionPipeline(features, dataFrame)
+
+    /*case "DT" => DecisionTreePipeline.decisionTreePipeline(vectorAssembler, dataFrame)
+
+    case "RF" => RandomForestPipeline.randomForestPipeline(vectorAssembler, dataFrame)
+
+    case "GBT" => GradientBoostedTreePipeline.gradientBoostedTreePipeline(vectorAssembler, dataFrame)
+
+    case "SVM" => SVMPipeline.svmPipeline(sparkContext)*/
 
   }
 
