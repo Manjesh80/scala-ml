@@ -1,6 +1,6 @@
 package com.manjesh.sparkml.classification
 
-import org.apache.log4j.{Level, Logger}
+import org.apache.log4j.Logger
 import org.apache.spark.SparkContext
 import org.apache.spark.mllib.classification.SVMWithSGD
 import org.apache.spark.mllib.linalg.Vectors
@@ -11,9 +11,9 @@ import org.apache.spark.mllib.regression.LabeledPoint
   */
 object SVMPipeline {
 
-  def main(args: Array[String]): Unit = {
-    val sc = new SparkContext("local[2]", "Classification")
-    Logger.getLogger("org").setLevel(Level.ERROR)
+  @transient lazy val logger = Logger.getLogger(getClass.getName)
+
+  def svmPipeline(sc: SparkContext) = {
     val records = sc
       .textFile("/home/cloudera/workspace/scala-ml/src/main/scala/com/manjesh/sparkml/dataset/train_noheader.tsv")
       .map(line => line.split("\t"))
@@ -21,8 +21,7 @@ object SVMPipeline {
     val data = records.map { r =>
       val trimmed = r.map(_.replaceAll("\"", ""))
       val label = trimmed(r.size - 1).toInt
-      val features = trimmed.slice(4, r.size - 1)
-        .map(d => if (d == "?") 0.0 else d.toDouble)
+      val features = trimmed.slice(4, r.size - 1).map(d => if (d == "?") 0.0 else d.toDouble)
       LabeledPoint(label, Vectors.dense(features))
     }
 
@@ -40,8 +39,11 @@ object SVMPipeline {
     }.sum()
 
     // calculate accuracy
+    println(svmTotalCorrect)
+    println(data.count())
     val svmAccuracy = svmTotalCorrect / data.count()
     println(svmAccuracy)
   }
+
 
 }

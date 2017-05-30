@@ -12,12 +12,12 @@ import org.apache.spark.ml.feature.VectorAssembler
   * Created by cloudera on 5/30/17.
   **/
 
-object RecommendationEngine {
+object ClassificationEngine {
 
   def main(args: Array[String]): Unit = {
 
     //val model = args(0)
-    val model = "LR"
+    val model = "SVM"
 
     Logger.getLogger("org").setLevel(Level.WARN)
     Logger.getLogger("akka").setLevel(Level.OFF)
@@ -132,13 +132,13 @@ object RecommendationEngine {
 
     case "LR" => LogisticRegressionPipeline.logisticRegressionPipeline(features, dataFrame)
 
-    /*case "DT" => DecisionTreePipeline.decisionTreePipeline(vectorAssembler, dataFrame)
+    case "DT" => DecisionTreePipeline.decisionTreePipeline(features, dataFrame)
 
-    case "RF" => RandomForestPipeline.randomForestPipeline(vectorAssembler, dataFrame)
+    case "RF" => RandomForestPipeline.randomForestPipeline(features, dataFrame)
 
-    case "GBT" => GradientBoostedTreePipeline.gradientBoostedTreePipeline(vectorAssembler, dataFrame)
+    case "GBT" => GradientBoostedTreePipeline.gradientBoostedTreePipeline(features, dataFrame)
 
-    case "SVM" => SVMPipeline.svmPipeline(sparkContext)*/
+    case "SVM" => SVMPipeline.svmPipeline(sparkContext)
 
   }
 
