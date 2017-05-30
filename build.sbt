@@ -14,10 +14,6 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  /*"org.scalanlp" %% "breeze" % "0.13",
-  "org.scalanlp" %% "breeze-natives" % "0.13",
-  "org.scalanlp" %% "breeze-viz" % "0.13",*/
-
   "org.apache.spark" %% "spark-core" % sparkVersion,
   "org.apache.spark" %% "spark-mllib" % sparkVersion,
   "org.scalatest" % "scalatest_2.11" % "3.0.1"
@@ -25,8 +21,6 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.jfree" % "jfreechart" % "1.0.19"
 libraryDependencies += "com.github.wookietreiber" %% "scala-chart" % "latest.integration"
-
-
 
 
 scalaVersion := "2.11.7"

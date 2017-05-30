@@ -2,8 +2,9 @@ package com.manjesh.sparkml.util
 
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkConf
-import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.{DataFrame, SparkSession}
+
 
 /**
   * Created by cloudera on 5/27/17.
@@ -13,14 +14,18 @@ object Util {
   var sparkConf: SparkConf = null
   var sparkSession: SparkSession = null
 
+
   //region Init
 
   def init(appName: String): SparkSession = {
     Logger.getLogger("org").setLevel(Level.WARN)
-    sparkConf = (new SparkConf()).setMaster("local[2]").setAppName(appName)
-    sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
+    val m_sparkConf = (new SparkConf()).setMaster("local[2]").setAppName(appName)
+    val m_sparkSession = SparkSession.builder().config(sparkConf).getOrCreate()
+    sparkConf = m_sparkConf
+    sparkSession = m_sparkSession
     return sparkSession
   }
+
 
   def spark = sparkSession
 
@@ -88,6 +93,12 @@ object Util {
       .load("/home/cloudera/workspace/scala-ml/data/u.data")
   }
 
+  /*def getRatingDataset(): Dataset[Rating] = {
+    return spark.read
+      .textFile("/home/cloudera/workspace/scala-ml/data/u.data")
+      .map(parseRating);
+  }*/
+
   //endregion
 
   //region Misc
@@ -116,14 +127,14 @@ object Util {
     }
   }
 
-  def median(input :Array[Int]) : Int = {
+  def median(input: Array[Int]): Int = {
     val l = input.length
-    val l_2 = l/2.toInt
-    val x = l%2
+    val l_2 = l / 2.toInt
+    val x = l % 2
     var y = 0
-    if(x == 0) {
-      y = ( input(l_2) + input(l_2 + 1))/2
-    }else {
+    if (x == 0) {
+      y = (input(l_2) + input(l_2 + 1)) / 2
+    } else {
       y = (input(l_2))
     }
     return y
@@ -131,4 +142,8 @@ object Util {
 
   //endregion
 
+  //region Parse Data
+
+
+  //endregion
 }
